@@ -5,6 +5,8 @@ import connectDB from './configs/db.js';
 import adminRouter from './routes/adminRoutes.js';
 import adminController from './controllers/adminController.js';
 import blogRouter from './routes/blogRoutes.js';
+import appRouter from './routes/appRoutes.js';
+
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(express.json());
 app.get('/', (req,res)=>res.send("API IS WORKING"));
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
+app.use('/api', appRouter);
+
 const PORT = process.env.PORT || 3000;
 
 

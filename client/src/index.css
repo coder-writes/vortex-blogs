@@ -39,3 +39,28 @@
 .rich-text li { margin-bottom: 8px; }
 
 .rich-text a { color: #007AFF }
+
+
+
+@keyframes pulseSlow {
+                        0%, 100% { opacity: 0.7; transform: scale(1);}
+                        50% { opacity: 1; transform: scale(1.1);}
+                    }
+                    @keyframes pulseSlower {
+                        0%, 100% { opacity: 0.5; transform: scale(1);}
+                        50% { opacity: 0.8; transform: scale(1.15);}
+                    }
+                    @keyframes pulseFast {
+                        0%, 100% { opacity: 0.6; transform: scale(1);}
+                        50% { opacity: 0.9; transform: scale(1.07);}
+                    }
+                    .animate-pulse-slow {
+                        animation: pulseSlow 5s ease-in-out infinite;
+                    }
+                    .animate-pulse-slower {
+                        animation: pulseSlower 8s ease-in-out infinite;
+                    }
+                    .animate-pulse-fast {
+                        animation: pulseFast 3s ease-in-out infinite;
+                    }
+                

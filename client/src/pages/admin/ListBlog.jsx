@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { blog_data } from '../../assets/assets'
+import { useState } from 'react';
 import BlogTableItem from '../../components/admin/BlogTableItem'
 import { useAppContext } from '../../context/AppContext'
 import toast from 'react-hot-toast'

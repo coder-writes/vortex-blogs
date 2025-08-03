@@ -246,14 +246,67 @@ export const dashboard_data = {
 export const footer_data = [
       {
           title: "Quick Links",
-          links: ["Home", "Best Sellers", "Offers & Deals", "Contact Us", "FAQs"]
+          links: [{
+              title: "Home",
+              url: "/"
+          },
+          {
+              title: "Best Sellers",
+              url: "/best-sellers"
+          },
+          {
+              title: "Offers & Deals",
+              url: "/offers"
+          },
+          {
+              title: "Contact Us",
+              url: "/contactus"
+          },
+          {
+              title: "FAQs",
+              url: "/faqs"
+          }]
       },
       {
           title: "Need Help?",
-          links: ["Delivery Information", "Return & Refund Policy", "Payment Methods", "Track your Order", "Contact Us"]
+          links: [{
+              title: "Delivery Information",
+              url: "/delivery-information"
+          },
+          {
+              title: "Return & Refund Policy",
+              url: "/return-refund-policy"
+          },
+          {
+              title: "Payment Methods",
+              url: "/payment-methods"
+          },
+          {
+              title: "Track your Order",
+              url: "/track-order"
+          },
+          {
+              title: "Contact Us",
+              url: "/contactus"
+          }]
       },
       {
           title: "Follow Us",
-          links: ["Instagram", "Twitter", "Facebook", "YouTube"]
+          links: [{
+              title: "Instagram",
+              url: "/instagram"
+          },
+          {
+              title: "Twitter",
+              url: "/twitter"
+          },
+          {
+              title: "Facebook",
+              url: "/facebook"
+          },
+          {
+              title: "YouTube",
+              url: "/youtube"
+          }]
       }
   ];
