@@ -1,5 +1,4 @@
 import React from 'react'
-import { comments_data } from '../../assets/assets';
 import { useState, useEffect } from 'react';
 import CommentTableItem from '../../components/admin/CommentTableItem';
 import toast from 'react-hot-toast';
