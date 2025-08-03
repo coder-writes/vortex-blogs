@@ -42,6 +42,7 @@ export const AppProvider = ({children}) =>{
     const value = {
         axios,
         navigate,
+        fetchBlogs,
         token,
         setToken,
         blogs,

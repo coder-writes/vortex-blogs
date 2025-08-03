@@ -1,6 +1,6 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
-import { Outlet, useNavigate } from 'react-router'
+import { Outlet } from 'react-router'
 import SideBar from '../../components/admin/SideBar'
 import { useAppContext } from '../../context/AppContext'
 

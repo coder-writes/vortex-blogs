@@ -1,20 +1,26 @@
 import React from 'react'
-import {blog_data, blogCategories } from '../assets/assets'
+import {blogCategories } from '../assets/assets'
 import {motion} from 'motion/react'
 import { useState } from 'react'
 import BlogCard from './BlogCard'
+import { useEffect } from 'react'
 import { useAppContext } from '../context/AppContext'
-
+import Home from '../pages/Home'
 const BlogList = () => {
      const [menu,setMenu] = useState("All");
 
-     const {blogs,input} = useAppContext();
+     const {blogs,input,fetchBlogs} = useAppContext();
+
+
+     useEffect(()=>{
+      fetchBlogs();
+      }, []);
      const filteredBlogs =  () =>{
-      if(input === ''){
-        return blogs;
+       if(input === ''){
+         return blogs;
+        }
+        return blogs.filter((blog)=>blog.title.toLowerCase().includes(input.toLowerCase()) ||  blog.category.toLowerCase().includes(input.toLowerCase()));
       }
-      return blogs.filter((blog)=>blog.title.toLowerCase().includes(input.toLowerCase()) ||  blog.category.toLowerCase().includes(input.toLowerCase()));
-     }
   return (
     <div>
       <div className='flex justify-center gap-4 sm:gap-8 my-10 relative'>
