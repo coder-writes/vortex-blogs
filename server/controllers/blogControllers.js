@@ -123,9 +123,6 @@ export const addComment = async(req, res) => {
 
         
         const commentScore = await main(`You are given the content of the comment ${content}  You have to give the score of the comment based on the quality of the comment and the relevance of the comment to the blog post. The blog has the title ${blogTitle} and the subtitle ${blogSubTitle}. The score should be between 0 to 10 where 0 is the lowest and 10 is the highest. If the comment is not relevant to the blog post  and if the comment contains somehing vulgar and if the comments some spam  then give it a score of 0. otherwise decide to yourself. how much it is relevant to the blog post and how much it is useful to the blog post. also give the score of 0 to comments like hy hello  and this is a testing comment and this is a spam comment and this is a test comment and this is a spam comment and this is a test comment and anyting this you just have to return an interger score between 0 to 10.`);
-
-
-        console.log(commentScore);
         if(commentScore >=5){
             await Comment.create({blog,name,content,isApproved: true});
             res.json({success: true,message: "Your Comment has been Added Successfully Please Refresh to see the changes"});
