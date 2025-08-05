@@ -11,6 +11,7 @@ import blog_pic_10 from './blog_pic_10.png';
 import facebook_icon from './facebook_icon.svg'
 import googleplus_icon from './googleplus_icon.svg'
 import twitter_icon from './twitter_icon.svg'
+import linkdin_logo from './linkdin_logo.svg'
 import logo from './logo.png'
 import arrow from './arrow.svg'
 import logo_light from './logo_light.svg'
@@ -57,6 +58,7 @@ export const assets = {
     dashboard_icon_2,
     dashboard_icon_3,
     dashboard_icon_4,
+    linkdin_logo
 }
 export const blogCategories = ['All', 'Technology', 'Startup', 'Lifestyle', 'Finance']
 

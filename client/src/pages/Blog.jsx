@@ -9,6 +9,7 @@ import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 import { SpinnerInfinity } from 'spinners-react'
 
+
 const Blog = () => {
   const { id } = useParams();
   const { axios } = useAppContext();
@@ -17,10 +18,12 @@ const Blog = () => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const fetchBlogData = async () => {
     try {
-      const { data } = await axios.get(`/api/blog/${id}`);
+      const { data } = await axios.get(`/api/blog/single/${id}`);
       if (data.success) {
         setData(data.blog);
       } else {
@@ -30,6 +33,51 @@ const Blog = () => {
       toast.error("Error fetching blog data");
     }
   }
+  
+  const handleShare = async (i) => {
+  setIsLoading(true);
+  const pageUrl = window.location.href;
+  const title = data.title;
+  const subTitle = data.subTitle;
+  const promptText = `${title} ${subTitle}`;
+
+  let postContent = `Hey everyone! Check out this amazing blog post: ${title} - ${subTitle}`;
+  let shareUrl = "";
+
+  try {
+    const response = await axios.post('/api/blog/genrateSocialPost', { prompt: promptText });
+
+    if (response?.data?.success === true) {
+      postContent = response.data.content;
+    }
+    if (i === 0) {
+      await navigator.clipboard.writeText(`${postContent} ${pageUrl}`);
+      toast.success("Copied post to clipboard ✨");
+
+      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}&quote=${encodeURIComponent(postContent)}`;
+    } 
+
+    else if (i === 1) {
+      shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${encodeURIComponent(postContent)}`;
+    } 
+ 
+    else {
+      shareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(postContent)} ${pageUrl}`;
+    }
+  
+    const newWindow = window.open(shareUrl, '_blank');
+
+    if (!newWindow) {
+      toast.error("Popup blocked. Please allow popups for this site.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to share the blog: " + err.message);
+  }finally{
+    setIsLoading(false);
+  }
+};
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -38,7 +86,7 @@ const Blog = () => {
     setLoading(true);
     try {
       const { data } = await axios.post('/api/blog/add-comment', { blog: id, name, content });
-      if (data.success==true) {
+      if (data.success ==true) {
         toast.success(data.message);
         setName("");
         setContent("");
@@ -121,19 +169,26 @@ const Blog = () => {
           />
         </article>
 
-        {/* Social Share */}
-        <div className='flex items-center justify-center gap-4 mb-16 p-6 bg-white rounded-2xl shadow-lg'>
-          <span className='text-gray-600 font-medium'>Share this article:</span>
-          <div className='flex gap-3'>
-            {[assets.facebook_icon, assets.twitter_icon, assets.googleplus_icon].map((icon, i) => (
-              <button key={i} className='w-12 h-12 rounded-full bg-gray-100 hover:bg-[#5044E5] hover:scale-110 transition-all duration-300 flex items-center justify-center group'>
+
+          <div className='flex flex-col items-center justify-center gap-4 mb-16 p-6 bg-white rounded-2xl shadow-lg'>    
+            <div className='flex items-center gap-3'>
+              <span className='text-gray-600 font-medium'>{isLoading ? "Generating the Social Media Post..." : "Share this article:"}</span>
+              {!isLoading && (
+                <div className='flex gap-3'>
+            {[assets.facebook_icon, assets.twitter_icon, assets.linkdin_logo].map((icon, i) => (
+              <button disabled={isLoading} onClick={() => handleShare(i)} key={i} className='cursor-pointer w-12 h-12 rounded-full bg-gray-100 hover:bg-[#5044E5] hover:scale-110 transition-all duration-300 flex items-center justify-center group'>
                 <img src={icon} alt="social" className='w-6 h-6 group-hover:brightness-0 group-hover:invert transition-all duration-300' />
               </button>
             ))}
+                </div>
+              )}
+            </div>
+            {isLoading && (
+              <SpinnerInfinity size={50} thickness={180} speed={135} color="rgba(80, 68, 229, 1)" secondaryColor="rgba(0, 0, 0, 0.44)" />
+            )}
           </div>
-        </div>
 
-        {/* Comments Section */}
+          {/* Comments Section */}
         <div className='bg-white rounded-3xl shadow-xl p-8 mb-8'>
           <h3 className='text-2xl font-bold text-gray-900 mb-8 flex items-center gap-3'>
             <div className='w-8 h-8 bg-[#5044E5] rounded-lg flex items-center justify-center'>

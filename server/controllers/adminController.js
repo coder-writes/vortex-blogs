@@ -5,9 +5,6 @@ import Comment from '../models/Comment.js';
 const adminLogin = async(req,res) => {
     try{
         const {email , password} = req.body;
-
-        
-
         if(email!== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD){
             return res.json({success: false , message: "INVALID Credentials"})
         }

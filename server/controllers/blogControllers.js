@@ -164,9 +164,27 @@ export const deleteCommentById = async(req, res) => {
 export const genrateAIContent = async(req, res) => {
     try{
         const {prompt} = req.body;
-        console.log;(prompt);
+        console.log(prompt);
         const content = await main(`You are given the title and the subtitle for writing a blog post ${prompt}  Generate the content for this title and the subtitle in simple text format treat yourself as an expert also try to also try to give the quotes said by famous person use book references  make the post more humanised form`);
         res.json({success: true, content: content});
+    }catch(err){
+        res.json({success: false, message: err.message});
+    }
+}
+
+export const genrateSocialMediaPost = async (req,res)=>{
+    try{
+        const { prompt } = req.body;
+        console.log('prompt:', prompt);
+        if (!prompt) {
+            res.json({success: false, message: "Missing required fields"});
+            return;
+        }
+
+        const content = await main(`You are given the title and the subtitle for writing a short social media post ${prompt}  Generate the a medium sized social media post  for this title and the subtitle and yourself as an expert also try to also try to give the quotes said by famous person use book references  make the post more humanised form and the first few Lines should be catchy and engaging so that people will read the post and also try to use hashtags related to the topic of the post and also try to use emojis in the post and just return the post nothing extra`);
+
+        console.log(content);
+        res.json({success: true, content});
     }catch(err){
         res.json({success: false, message: err.message});
     }
