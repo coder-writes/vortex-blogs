@@ -19,14 +19,18 @@ export const AppProvider = ({children}) =>{
     const [token, setToken] = useState(null);
     const [blogs, setBlogs] = useState([]);
     const [input, setInput] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const fetchBlogs = async () => {
         try{
+           setLoading(true);
            const {data} =  await axios.get('/api/blog/all');
            data.success ? setBlogs(data.blogs) : toast.error(data.message);
            
         }catch(err){
             toast.error(err.message);
+        }finally{
+            setLoading(false);
         }
     }
 
@@ -44,6 +48,7 @@ export const AppProvider = ({children}) =>{
         navigate,
         fetchBlogs,
         token,
+        loading,
         setToken,
         blogs,
         setBlogs,

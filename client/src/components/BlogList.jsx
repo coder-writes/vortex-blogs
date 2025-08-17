@@ -6,10 +6,11 @@ import BlogCard from './BlogCard'
 import { useEffect } from 'react'
 import { useAppContext } from '../context/AppContext'
 import Home from '../pages/Home'
+import BlogLoader from '../components/BlogLoader'
 const BlogList = () => {
      const [menu,setMenu] = useState("All");
 
-     const {blogs,input,fetchBlogs} = useAppContext();
+     const {blogs,input,fetchBlogs,loading} = useAppContext();
 
 
      useEffect(()=>{
@@ -38,7 +39,13 @@ const BlogList = () => {
     ))}
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40'>
-        {filteredBlogs().filter((blog)=> menu === "All" ? true : blog.category === menu).map((blog)=><BlogCard key={blog._id} blog={blog} />)}
+        {
+          loading ? 
+            <BlogLoader />
+           : (
+            filteredBlogs().filter((blog)=> menu === "All" ? true : blog.category === menu).map((blog)=><BlogCard key={blog._id} blog={blog} />)
+          )
+        }
       </div>
     </div>
   )
