@@ -51,6 +51,15 @@ export const getAllBlogs = async(req, res) => {
     }
 }
 
+export const getLatestBlog = async(req,res)=>{
+    try{
+        const blogs = await Blog.find({isPublished: true}).sort({createdAt: -1}).limit(1);
+        res.json({success: true, blog: blogs[0]});
+    }catch(err){
+        res.json({success: false, message: err.message});
+    }
+}
+
 
 export const getBlogById = async(req, res) => {
     try {
